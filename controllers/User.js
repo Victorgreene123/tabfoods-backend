@@ -7,6 +7,8 @@ const createUser = async (req, res) => {
   try {
     const email = req.body.email
     const password = req.body.password
+   
+    
     const existingUser = await userModel.findOne({email : email})
     
     if(existingUser){
@@ -86,8 +88,33 @@ const updateUser = async (req, res) =>{
         
     }
 }
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await userModel.find({});
+    res.status(200).json({ users });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedUser = await userModel.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found', success: false });
+    }
+
+    res.status(200).json({ message: 'User deleted successfully', success: true });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ message: 'Server error', success: false });
+  }
+};
+
+export { createUser, getUser, updateUser, getAllUsers, deleteUser };
 
 
 
-
-export { createUser , getUser , updateUser };

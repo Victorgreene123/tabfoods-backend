@@ -6,6 +6,10 @@ const User = new mongoose.Schema({
     
     
     password:String,
+    role: {
+        type: String,
+        default: "user"
+    },
     
 
 })

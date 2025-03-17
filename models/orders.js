@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import productmodel from "./products";
+import productmodel from "./products.js";
 
 const Order = new mongoose.Schema({
     fullname: String,
@@ -7,7 +7,11 @@ const Order = new mongoose.Schema({
     phone: String,
     address: String,
     
-    products: productmodel ,
+    products: Array ,
+    status: {
+        type: String,
+        default: "pending"
+    },
     
     
 

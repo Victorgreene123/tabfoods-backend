@@ -7,6 +7,7 @@ import router from './routes/user.js';
 import authrouter from './routes/auth.js';
 import payment from './routes/payment.js';
 import productrouter from './routes/products.js';
+import orderrouter from './routes/order.js';
 
 // Configure environment variables
 dotenv.config();
@@ -26,6 +27,7 @@ app.use('/api/auth', authrouter);
 app.use('/api/users', router);
 app.use('/api/payments' , payment)
 app.use('/api/products' , productrouter)
+app.use('/api/orders' , orderrouter)
 
 // Start the server
 const start = async () => {
