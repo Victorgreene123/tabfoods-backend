@@ -1,48 +1,61 @@
-import axios from 'axios'
+import axios from 'axios';
+import dotenv from 'dotenv';
+import ordermodel from './models/order.js'; // adjust this import path as needed
 
+dotenv.config();
 
-const FLUTTERWAVE_SECRET_KEY = "FLWSECK_TEST-4d2caa94a9017a315d67b42684817535-X";
-
-const initiatePayment = async (req , res) =>{
-
-
-  const { amount, currency, email, phone } = req.body;
+const initiatePayment = async (req, res) => {
+  const { amount, currency, email, phone, name, address, productsDetail } = req.body;
 
   try {
+    // Step 1: Create a new Order in DB
+    const newOrder = new ordermodel({
+      fullname: name,
+      email,
+      phone,
+      address,
+      productsDetail,
+      amount,
+      status: 'pending',
+    });
+
+    const savedOrder = await newOrder.save();
+
+    // Step 2: Create tx_ref with orderId
+    const tx_ref = `order-${savedOrder._id}-${Date.now()}`;
+
+    // Step 3: Initiate Flutterwave payment
     const response = await axios.post(
       'https://api.flutterwave.com/v3/payments',
       {
-        tx_ref: `tx-${Date.now()}`, // Unique transaction reference
+        tx_ref,
         amount,
         currency,
-        redirect_url: 'http://localhost:5173/payment-success', // React frontend route
+        redirect_url: 'http://localhost:5173/payment-success',
         payment_options: 'card,ussd,qr',
         customer: {
           email,
           phonenumber: phone,
-          name: "Customer Name",
+          name,
         },
         customizations: {
-          title: "Your Business Name",
-          description: "Payment for items",
-          logo: "https://your-logo-url.com/logo.png", // Optional logo
+          title: 'TAB FOODS',
+          description: 'Payment for items',
+          logo: 'https://tabfoods.com.ng/assets/tab-foods-logo-Bep5H409.png',
         },
       },
       {
         headers: {
-          Authorization: `Bearer ${FLUTTERWAVE_SECRET_KEY}`,
+          Authorization: `Bearer ${process.env.FLUTTERWAVE_SECRET_KEY}`,
         },
       }
     );
 
-    res.json(response.data); // Return payment link to the frontend
+    res.json(response.data); // Return payment link to frontend
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Payment initialization failed" });
+    res.status(500).json({ error: 'Payment initialization failed' });
   }
-}
-// Initialize Payment
+};
 
-
-export default initiatePayment
-
+export default initiatePayment;

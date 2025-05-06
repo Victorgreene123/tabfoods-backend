@@ -7,7 +7,9 @@ const Order = new mongoose.Schema({
     phone: String,
     address: String,
     
-    products: Array ,
+    productsDetail: Array ,
+   
+    amount: Number,
     status: {
         type: String,
         default: "pending"

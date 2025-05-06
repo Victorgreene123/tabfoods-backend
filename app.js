@@ -28,7 +28,9 @@ app.use('/api/users', router);
 app.use('/api/payments' , payment)
 app.use('/api/products' , productrouter)
 app.use('/api/orders' , orderrouter)
-
+app.get('/' , (req, res) =>{
+    res.send("Api of the TabFoods Ecommerce Website");
+});
 // Start the server
 const start = async () => {
   try {
