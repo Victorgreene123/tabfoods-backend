@@ -1,18 +1,18 @@
-import express from 'express';
+import express, { Router } from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import ordermodel from './models/order.js'; // adjust the path as needed
+import ordermodel from '../models/orders.js'; // adjust the path as needed
 
 dotenv.config();
 
-const app = express();
-app.use(bodyParser.json());
+const webhookRouter = Router(); // Create a new router instance
+webhookRouter.use(bodyParser.json()); // Parse JSON bodies
 
 const FLW_SECRET_HASH = process.env.FLW_SECRET_HASH;
 
 // Webhook route
-app.post('/flw-webhook', async (req, res) => {
+webhookRouter.post('/', async (req, res) => {
     try {
         const signature = req.headers['verif-hash'];
         if (!signature || signature !== FLW_SECRET_HASH) {
@@ -61,3 +61,6 @@ app.post('/flw-webhook', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+export default webhookRouter; // Export the router to use in your main app file
+// In your main app file (e.g., app.js), import and use the webhook router

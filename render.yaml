@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: backend
+    name: tabfoods-backend
     env: node
     plan: free
     buildCommand: npm install

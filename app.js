@@ -8,6 +8,7 @@ import authrouter from './routes/auth.js';
 import payment from './routes/payment.js';
 import productrouter from './routes/products.js';
 import orderrouter from './routes/order.js';
+import webhookRouter from './webhooks/paymenthook.js';
 
 // Configure environment variables
 dotenv.config();
@@ -22,9 +23,10 @@ app.use(express.json());
 // Define a port
 const PORT = process.env.PORT || 8000;
 
-// Use the imported router with a base path
+// Use the imported router with a bases path
 app.use('/api/auth', authrouter);
 app.use('/api/users', router);
+app.use('/api/flw-webhook', webhookRouter )
 app.use('/api/payments' , payment)
 app.use('/api/products' , productrouter)
 app.use('/api/orders' , orderrouter)
