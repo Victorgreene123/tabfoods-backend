@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 8000  # you can adjust this or match what your app expects
+      - key: MONGODB_URI
+        sync: false  # secret, set in Render dashboard
+      - key: JWT_SECRET
+        sync: false  # secret, set in Render dashboard
+      - key: FLW_SECRET_HASH
+        sync: false  # secret, set in Render dashboard
+      - key: FLUTTERWAVE_SECRET_KEY
+        sync: false  # secret, set in Render dashboard
