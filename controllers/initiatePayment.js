@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-import ordermodel from './models/order.js'; // adjust this import path as needed
+import ordermodel from '../models/orders.js'; // adjust this import path as needed
 
 dotenv.config();
 
