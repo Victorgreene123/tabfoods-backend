@@ -15,14 +15,15 @@ const FLW_SECRET_HASH = process.env.FLW_SECRET_HASH;
 webhookRouter.post('/', async (req, res) => {
     try {
         const signature = req.headers['verif-hash'];
-        if (!signature || signature !== FLW_SECRET_HASH) {
+        if (!signature || signature !== FLW_TEST_SECRET_HASH) {
             console.log('❌ Invalid webhook signature');
             return res.status(401).send('Unauthorized');
         }
 
         const payload = req.body;
-        const txRef = payload.data.tx_ref;
-        const status = payload.data.status;
+        console.log('Received payload:', payload);
+        const txRef = payload.txRef;
+        const status = payload.status;
 
         console.log('✅ Received webhook payload:', payload);
 

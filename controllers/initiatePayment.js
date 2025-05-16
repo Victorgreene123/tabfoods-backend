@@ -46,7 +46,7 @@ const initiatePayment = async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.FLUTTERWAVE_SECRET_KEY}`,
+          Authorization: `Bearer ${process.env.FLUTTERWAVE_TEST_SECRET_KEY}`,
         },
       }
     );
