@@ -58,6 +58,8 @@ export const updateProduct = async (req, res) => {
     }
     res.status(200).json({ message: "Product updated successfully", success: true, product: updatedProduct });
   } catch (error) {
-    res.status(400).json({ message: "Error updating product", success: false });
+    res.status(400).json(
+      { message: "Error updating product", success: false }
+    );
   }
 };

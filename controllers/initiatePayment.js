@@ -31,7 +31,7 @@ const initiatePayment = async (req, res) => {
         tx_ref,
         amount,
         currency,
-        redirect_url: 'http://localhost:5173/payment-success',
+        redirect_url: 'http://tabfoods.com.ng/payment-success',
         payment_options: 'card,ussd,qr',
         customer: {
           email,
